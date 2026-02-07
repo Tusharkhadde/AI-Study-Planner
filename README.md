@@ -29,5 +29,5 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/ai-study-planner.git
-cd ai-study-planner
+git clone https://github.com/Tusharkhadde/AI-Study-Planner.git
+cd AI-Study-Planner
