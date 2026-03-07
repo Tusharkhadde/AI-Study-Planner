@@ -33,9 +33,9 @@ export class AIService {
     if (genAI && this.model) {
       try {
         const prompt = this.buildPrompt(request);
-        
+
         console.log('🤖 Generating AI-powered study plan...');
-        
+
         const result = await this.model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
@@ -113,7 +113,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
       }
 
       const parsed = JSON.parse(jsonMatch[0]);
-      
+
       // Convert to our format
       const startDate = new Date();
       const weeklySchedules: WeeklySchedule[] = (parsed.weeklySchedules || []).map(
@@ -165,7 +165,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
 
   private generateIntelligentFallbackPlan(request: AIGenerationRequest): any {
     console.log('🧠 Creating intelligent study plan...');
-    
+
     const { subjects, assessments, preferences, targetDate } = request;
     const startDate = new Date();
     const endDate = new Date(targetDate);
@@ -176,7 +176,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
       const priorityWeight = { critical: 4, high: 3, medium: 2, low: 1 };
       const aPriority = priorityWeight[a.priority || 'medium'];
       const bPriority = priorityWeight[b.priority || 'medium'];
-      
+
       if (aPriority !== bPriority) return bPriority - aPriority;
       return (a.confidenceLevel || 3) - (b.confidenceLevel || 3);
     });
@@ -201,10 +201,10 @@ Create study blocks for each subject, distribute them evenly across the week.`;
 
           // Calculate session duration based on priority
           const sessionDuration = 60; // 60 minutes per session
-          
+
           // Determine session type
           let sessionType: 'learning' | 'practice' | 'revision' | 'assessment-prep' = 'learning';
-          
+
           if (weekNum === totalWeeks - 1) {
             sessionType = 'revision';
           } else if ((dayNum + subjectIdx) % 3 === 2) {
@@ -256,7 +256,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
     return {
       insights: {
         priorityReasoning: this.generatePriorityReasoning(sortedSubjects),
-        studyTips: this.generateStudyTips(),
+        studyTips: this.generateGeneralStudyTips(),
         potentialChallenges: this.generateChallenges(sortedSubjects, totalWeeks),
         balancingStrategy: this.generateBalancingStrategy(sortedSubjects, preferences),
       },
@@ -279,7 +279,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
 
   private generateWeeklyGoals(weekNum: number, totalWeeks: number, subjects: any[]): string[] {
     const goals: string[] = [];
-    
+
     if (weekNum === 0) {
       goals.push('Establish consistent study routine');
       goals.push('Complete initial assessment of all subjects');
@@ -290,7 +290,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
       goals.push(`Master core concepts in ${subjects[0]?.name || 'priority subjects'}`);
       goals.push('Complete all practice exercises');
     }
-    
+
     goals.push('Maintain daily study schedule');
     return goals;
   }
@@ -298,11 +298,11 @@ Create study blocks for each subject, distribute them evenly across the week.`;
   private generatePriorityReasoning(subjects: any[]): string {
     const highPriority = subjects.filter(s => s.priority === 'critical' || s.priority === 'high');
     const lowConfidence = subjects.filter(s => (s.confidenceLevel || 3) <= 2);
-    
+
     return `Prioritized ${highPriority.length} high-priority subjects and ${lowConfidence.length} low-confidence areas. More study time allocated to subjects needing improvement while maintaining regular practice for stronger subjects.`;
   }
 
-  private generateStudyTips(): string[] {
+  private generateGeneralStudyTips(): string[] {
     return [
       'Start each session with a 5-minute review of previous material',
       'Use the Pomodoro technique: 25 minutes focus, 5 minutes break',
@@ -331,7 +331,7 @@ Create study blocks for each subject, distribute them evenly across the week.`;
   private getDefaultInsights() {
     return {
       priorityReasoning: 'Subjects prioritized based on confidence levels and assessment dates',
-      studyTips: this.generateStudyTips(),
+      studyTips: this.generateGeneralStudyTips(),
       potentialChallenges: ['Time management', 'Maintaining focus', 'Consistent practice'],
       balancingStrategy: 'Equal distribution with emphasis on weak areas',
     };
