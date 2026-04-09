@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTimerStore } from '@/stores/useTimerStore';
 
-export function useTimer() {
+export function useTimer(): any {
   const intervalRef = useRef<NodeJS.Timeout>();
   const { isRunning, isPaused, tick } = useTimerStore();
 
