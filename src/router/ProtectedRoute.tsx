@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { usePlanStore } from '@/stores/usePlanStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { ROUTES } from '@/config/routes';
 
 interface ProtectedRouteProps {
@@ -8,11 +8,10 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { currentPlan } = usePlanStore();
+  const { isAuthenticated } = useAuthStore();
 
-  if (!currentPlan) {
-    // Redirect to planner if no study plan exists
-    return <Navigate to={ROUTES.planner} replace />;
+  if (!isAuthenticated) {
+    return <Navigate to={ROUTES.login} replace />;
   }
 
   return <>{children}</>;
