@@ -8,6 +8,8 @@ import { ROUTES } from '@/config/routes';
 
 // Lazy load pages for better performance
 const LandingPage = React.lazy(() => import('@/pages/LandingPage').then(m => ({ default: m.LandingPage })));
+const SignInPage = React.lazy(() => import('@/pages/SignInPage').then(m => ({ default: m.SignInPage })));
+const SignUpPage = React.lazy(() => import('@/pages/SignUpPage').then(m => ({ default: m.SignUpPage })));
 const PlannerPage = React.lazy(() => import('@/pages/PlannerPage').then(m => ({ default: m.PlannerPage })));
 const DashboardPage = React.lazy(() => import('@/pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const ProgressPage = React.lazy(() => import('@/pages/ProgressPage').then(m => ({ default: m.ProgressPage })));
@@ -24,6 +26,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingScreen />}>
             <LandingPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.login,
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <SignInPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: ROUTES.register,
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <SignUpPage />
           </Suspense>
         ),
       },
