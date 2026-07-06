@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { AppRouter } from './router';
 import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
 import { useUIStore } from '@/stores/useUIStore';
+import { Toaster } from 'sonner';
 
 function App() {
   const { theme } = useUIStore();
@@ -23,6 +24,7 @@ function App() {
   return (
     <ErrorBoundary>
       <AppRouter />
+      <Toaster theme={theme === 'dark' ? 'dark' : 'light'} position="bottom-right" />
     </ErrorBoundary>
   );
 }
